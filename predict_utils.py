@@ -1,8 +1,14 @@
 import numpy as np
-import tensorflow as tf
 from PIL import Image
 
-interpreter = tf.lite.Interpreter(model_path="heart_disease_model.tflite")
+try:
+    import tflite_runtime.interpreter as tflite
+    Interpreter = tflite.Interpreter
+except ImportError:
+    import tensorflow as tf
+    Interpreter = tf.lite.Interpreter
+
+interpreter = Interpreter(model_path="heart_disease_model.tflite")
 interpreter.allocate_tensors()
 
 input_details = interpreter.get_input_details()
