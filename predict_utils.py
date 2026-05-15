@@ -1,16 +1,17 @@
+import os
 import numpy as np
 from PIL import Image
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "heart_disease_model.tflite")
+
 try:
     import tflite_runtime.interpreter as tflite
-    Interpreter = tflite.Interpreter
-except ImportError:
-    import tensorflow as tf
-    Interpreter = tf.lite.Interpreter
+    interpreter = tflite.Interpreter(model_path=MODEL_PATH)
+except Exception as e:
+    raise RuntimeError(f"Model load failed: {e}\nModel path: {MODEL_PATH}")
 
-interpreter = Interpreter(model_path="heart_disease_model.tflite")
 interpreter.allocate_tensors()
-
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 
