@@ -1,16 +1,20 @@
 import numpy as np
 from PIL import Image
+import struct
+import os
 
 try:
     import tflite_runtime.interpreter as tflite
     Interpreter = tflite.Interpreter
 except ImportError:
-    import tensorflow as tf
-    Interpreter = tf.lite.Interpreter
+    try:
+        import tensorflow as tf
+        Interpreter = tf.lite.Interpreter
+    except ImportError:
+        Interpreter = None
 
 interpreter = Interpreter(model_path="heart_disease_model.tflite")
 interpreter.allocate_tensors()
-
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 
