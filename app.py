@@ -290,6 +290,7 @@ if uploaded_file is not None:
         b_style = ParagraphStyle('b', fontSize=11, fontName='Helvetica', spaceAfter=6, textColor=colors.HexColor('#333344'), leading=16)
 
         story.append(Paragraph("CardioScan AI — ECG Analysis Report", t_style))
+        story.append(Spacer(1, 0.1*inch))
         story.append(Paragraph(f"Generated: {ts}", s_style))
         story.append(Spacer(1, 0.15*inch))
 
